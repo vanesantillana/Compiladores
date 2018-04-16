@@ -5,8 +5,6 @@ select count(*) from libros;
 select nombre,clave from usuarios;
 select nombre, clave from usuarios where clave='bocajunior';
 select * from libros join editoriales on libros.codigoeditorial=editoriales.codigo;
-~
-
 
 SELECT Orders.OrderID, Customers.CustomerName
 FROM Orders
@@ -17,8 +15,7 @@ FROM Orders
 RIGHT JOIN Employees ON Orders.EmployeeID = Employees.EmployeeID
 ORDER BY Orders.OrderID;
 
-
 delete from usuarios where nombre='Leonardo';
 update usuarios set nombre='MarceloDuarte', clave='Marce' where nombre='Marcelo';
 insert into usuarios (nombre, clave) values ('MarioPerez','Marito');
-
+~
