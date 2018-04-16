@@ -1,6 +1,8 @@
 import ply.lex as lex
 import codecs
+
 resultado_lexema=[]
+cadena=''
 
 reservada = (
     # Palabras Reservadas
@@ -62,6 +64,8 @@ t_COMA = r','
 t_PARENTESIS = r'(\(|\))'
 t_LLAVE= r'({|})'
 
+t_ignore =' \t'
+
 def t_FECHA(t):
     r'([0-2][0-9]|3[0-1])(-|/)(0[1-9]|1[0-2])(-|/)(\d{4})'
     return t;
@@ -110,7 +114,10 @@ def t_COMENTARIO(t):
      r'--(.)*'
      t.lexer.lineno += 1
      print("Comentario de una linea")
-t_ignore =' \t'
+
+def t_newline(t):
+    r'\n+'
+    t.lexer.lineno += len(t.value)
 
 def t_error( t):
     global resultado_lexema
@@ -141,7 +148,22 @@ def prueba(data):
 analizador = lex.lex()
 
 if __name__ == '__main__':
+    directorio = '/home/vye/Documentos/2018-01/Compiladores/ALexico/'
+    archivo = 'test.vye'
+    test = directorio+archivo
+    fp =codecs.open(test,'r','utf-8')
+    cadena = fp.read()
+    fp.close()
+    analizador.input(cadena)
     while True:
-        data = input("Ingrese: ")
-        prueba(data)
-        imprimir(resultado_lexema)
+        tok = analizador.token()
+        if not tok:
+            break
+        # print("lexema de "+tok.type+" valor "+tok.value+" linea "tok.lineno)
+        estado = "Linea {:4} Tipo {:16} Valor {:16} Posicion {:4}".format(str(tok.lineno),str(tok.type) ,str(tok.value), str(tok.lexpos) )
+        resultado_lexema.append(estado)
+    imprimir(resultado_lexema)
+'''
+data = input("Ingrese: ")
+prueba(data)
+imprimir(resultado_lexema)'''
