@@ -19,36 +19,37 @@ reservada = (
     'ON'
 )
 tokens = reservada + (
-    'ID',
-    'NUMERO',
-    'FECHA',
-    'BOOL',
-    'ASIGNAR',
-    #aritmeticos
-    'OP_A',
-    #logica
-    'OP_L', # and | or |not
-    #relacional
-    'OP_R',
-    'DISTINTO',
-    
-    'TIPO_JOIN', # inner| right | left
-    'GROUP_BY', # group_by
-    'COUNT',
-    'OP_M', # max | min | sum | avg
+'ID',
+'INTEGER',
+'DOUBLE',
+'CADENA',
+'FECHA',
+'BOOL',
+'ASIGNAR',
+#aritmeticos
+'OP_A',
+#logica
+'OP_L', # and | or |not
+#relacional
+'OP_R',
+'DISTINTO',
 
-    # Simbolos
-    'TODO',
+'TIPO_JOIN', # inner| right | left
+'GROUP_BY', # group_by
+'COUNT',
+'OP_M', # max | min | sum | avg
 
-    # Otros
-    'COMILLA',
-    'PUNTOCOMA',
-    'PUNTO',
-    'COMA',
-    'PARENTESIS',
-    'LLAVE',
-    'COMENTARIO',
-    'COMENTARIO_BLOCK'
+# Simbolos
+'TODO',
+
+# Otros
+#'COMILLA',
+'PUNTOCOMA',
+'PUNTO',
+'COMA',
+'PARENTESIS',
+'COMENTARIO',
+'COMENTARIO_BLOCK'
 )
 
 # Reglas de Expresiones Regualres para token de Contexto simple
@@ -59,14 +60,15 @@ t_ASIGNAR = r'='
 t_OP_R = r'((<|>|=)=?)'
 t_TODO = r'\*'
 
-t_COMILLA = r'(\'|")'
+#t_COMILLA = r'(\'|")'
 t_PUNTOCOMA = r';'
 t_COMA = r','
 t_PUNTO = r'\.'
 t_PARENTESIS = r'(\(|\))'
-t_LLAVE= r'({|})'
-
 t_ignore =' \t'
+t_INTEGER = r'-?\d+'
+t_DOUBLE = r'-?\d+\.\d+'
+t_CADENA = r'(\'|")[\w ]+[\w ]*(\'|")'
 
 def t_ON(t):
     r'on'
@@ -98,11 +100,6 @@ def t_ID(t):
     if t.value.upper() in reservada:
         t.value = t.value.upper()
         t.type = t.value
-    return t
-
-def t_NUMERO(t):
-    r'-?\d+([,]\d+)?'
-    t.value = int(t.value)
     return t
 
 def t_OP_L(t):
@@ -141,17 +138,8 @@ def imprimir(res):
             print(Fore.BLACK+i)
 
 def agregar_tabla_simbolos(t,val):
-    num=''
-    if(re.search(r'-?\d+',val)):
-        num='int'
     if(t=='ID'):
         tabla.append("|{:4}\t|{:5}\t\t|{:4}\t\t|".format(t,val, 'string'))
-    elif(t=='NUMERO'):
-        tabla.append("|{:4}\t|{:5}\t\t|{:4}\t\t|".format(t,val, num))
-    elif(t=='FECHA'):
-        tabla.append("|{:4}\t|{:5}\t\t|{:4}\t\t|".format(t,val, 'date'))
-    elif(t=='BOOL'):
-        tabla.append("|{:4}\t|{:5}\t\t|{:4}\t\t|".format(t,val, 'bool'))
 
 # instanciamos el analizador lexico
 analizador = lex.lex()
@@ -169,7 +157,7 @@ if __name__ == '__main__':
         if not tok:
             break
         # print("lexema de "+tok.type+" valor "+tok.value+" linea "tok.lineno)
-        estado = "Linea {:4} Tipo {:16} Valor {:16} Posicion {:4}".format(str(tok.lineno),str(tok.type) ,str(tok.value), str(tok.lexpos) )
+        estado = "Linea {:4} Tipo {:16} Valor {:16} Posicion {:4}".format(str(tok.lineno),str(tok.type) ,str(tok.value), str(tok.lexpos))
         resultado_lexema.append(estado)
         cadena_result+= str(tok.type)+" ";
         agregar_tabla_simbolos(str(tok.type) ,str(tok.value))
@@ -184,3 +172,15 @@ if __name__ == '__main__':
 data = input("Ingrese: ")
 prueba(data)
 imprimir(resultado_lexema)'''
+
+'''
+    elif(t=='NUMERO'):
+    num=''
+    if(re.search(r'-?\d+',val)):
+        num='int'
+        tabla.append("|{:4}\t|{:5}\t\t|{:4}\t\t|".format(t,val, num))
+    elif(t=='FECHA'):
+        tabla.append("|{:4}\t|{:5}\t\t|{:4}\t\t|".format(t,val, 'date'))
+    elif(t=='BOOL'):
+        tabla.append("|{:4}\t|{:5}\t\t|{:4}\t\t|".format(t,val, 'bool'))
+'''
