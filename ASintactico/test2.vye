@@ -1,0 +1,6 @@
+select
+  libro.codigo
+from
+  libro
+where
+  libro.codigo == 77.8;

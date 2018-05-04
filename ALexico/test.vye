@@ -1,4 +1,4 @@
-select * from libro45s.7 "8b 9_8797" where (autor='Borges') && (precio<=20) 34  56.667 5.0  8;
+select * from libro45s.7 "8b 9_8797" where (autor='Borges') and (cod='6576')  && (precio<=20) 34  56.667 5.0  8;
 09/12/2018
 
 /*

@@ -6,6 +6,7 @@ from colorama import Fore
 resultado_lexema=[]
 cadena_result=''
 tabla=[]
+cadena =''
 
 reservada = (
     # Palabras Reservadas
@@ -19,37 +20,36 @@ reservada = (
     'ON'
 )
 tokens = reservada + (
-'ID',
-'INTEGER',
-'DOUBLE',
-'CADENA',
-'FECHA',
-'BOOL',
-'ASIGNAR',
-#aritmeticos
-'OP_A',
-#logica
-'OP_L', # and | or |not
-#relacional
-'OP_R',
-'DISTINTO',
+    'ID',
+    'INTEGER',
+    'DOUBLE',
+    'CADENA',
+    'FECHA',
+    'BOOL',
+    'ASIGNAR',
+    #aritmeticos
+    'OP_A',
+    #logica
+    'OP_L', # and | or 
+    #relacional
+    'OP_R',
+    'DISTINTO',
 
-'TIPO_JOIN', # inner| right | left
-'GROUP_BY', # group_by
-'COUNT',
-'OP_M', # max | min | sum | avg
+    'TIPO_JOIN', # inner| right | left
+    'GROUP_BY', # group_by
+    'COUNT',
+    'OP_M', # max | min | sum | avg
 
-# Simbolos
-'TODO',
+    # Simbolos
+    'TODO',
 
-# Otros
-#'COMILLA',
-'PUNTOCOMA',
-'PUNTO',
-'COMA',
-'PARENTESIS',
-'COMENTARIO',
-'COMENTARIO_BLOCK'
+    # Otros
+    'PUNTOCOMA',
+    'PUNTO',
+    'COMA',
+    'PARENTESIS',
+    'COMENTARIO',
+    'COMENTARIO_BLOCK'
 )
 
 # Reglas de Expresiones Regualres para token de Contexto simple
@@ -68,7 +68,11 @@ t_PARENTESIS = r'(\(|\))'
 t_ignore =' \t'
 t_INTEGER = r'-?\d+'
 t_DOUBLE = r'-?\d+\.\d+'
-t_CADENA = r'(\'|")[\w ]+[\w ]*(\'|")'
+t_CADENA = r'(\'|")[\w ]+(\'|")'
+
+def t_OP_L(t):
+    r'((and|\&\&)|(\|{2}|or))'
+    return t;
 
 def t_ON(t):
     r'on'
@@ -102,9 +106,6 @@ def t_ID(t):
         t.type = t.value
     return t
 
-def t_OP_L(t):
-    r'((and|\&\&)|(\|{2}|or)|(not|!))'
-    return t
 
 def t_DISTINTO(t):
     r'<>'
