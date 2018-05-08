@@ -1,1 +1,1 @@
-select libro.cod , libro.c from libros where libros.autor=='Borges'; 
+select 87.97 from 8768 where libro.cod==666;

@@ -325,12 +325,15 @@ def pila_Sintac(l_tokens):
             print(pila)
             #print(pila,'\n',l_tokens)
         elif(gram == False):
-            print('error:', pila[end],' - ',l_tokens[0])
-            if(pila[end] in gramatica):
-                l_tokens[0]= gramatica[pila[end]][0][0]
-            print(pila)
+            print('Error:', pila[end],' - ',l_tokens[0])
+            pila.pop(len(pila)-1)
+            fin = l_tokens.pop(0)
+            #if(pila[end] in gramatica):
+            #    l_tokens[0]= gramatica[pila[end]][0][0]
+            #print(pila)
             #print(pila,'\n',l_tokens)
-            if(l_tokens[0]=='$'):
+            if(fin=='$'):
+                print('termino mi lista de tokens')
                 return
         #print('itero',len(pila))
         #input('Enter your input:') 
